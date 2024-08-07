@@ -47,9 +47,15 @@ def compressed_stream_helper(compressed_format, mp3_file_path, default_speech_au
         nonlocal done
         done = True
 
+    def on_recognizing(evt):
+        print('RECOGNIZING on {}'.format(evt))
+
+    def on_recognized(evt):
+        print('RECOGNIZED on {}'.format(evt))
+
     # Connect callbacks to the events fired by the speech recognizer
-    speech_recognizer.recognizing.connect(lambda evt: print('RECOGNIZING: {}'.format(evt)))
-    speech_recognizer.recognized.connect(lambda evt: print('RECOGNIZED: {}'.format(evt)))
+    speech_recognizer.recognizing.connect(on_recognizing)
+    speech_recognizer.recognized.connect(on_recognized)
     speech_recognizer.session_started.connect(lambda evt: print('SESSION STARTED: {}'.format(evt)))
     speech_recognizer.session_stopped.connect(lambda evt: print('SESSION STOPPED {}'.format(evt)))
     speech_recognizer.canceled.connect(lambda evt: print('CANCELED {}'.format(evt)))
