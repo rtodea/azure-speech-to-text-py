@@ -30,9 +30,7 @@ class BinaryFileReaderCallback(speechsdk.audio.PullAudioInputStreamCallback):
             raise
 
 
-def compressed_stream_helper(compressed_format,
-        mp3_file_path,
-        default_speech_auth):
+def compressed_stream_helper(compressed_format, mp3_file_path, default_speech_auth):
     callback = BinaryFileReaderCallback(mp3_file_path)
     stream = speechsdk.audio.PullAudioInputStream(stream_format=compressed_format, pull_stream_callback=callback)
 
@@ -72,3 +70,9 @@ def pull_audio_input_stream_compressed_mp3(mp3_file_path: str, default_speech_au
     compressed_format = speechsdk.audio.AudioStreamFormat(
         compressed_stream_format=speechsdk.AudioStreamContainerFormat.MP3)
     compressed_stream_helper(compressed_format, mp3_file_path, default_speech_auth)
+
+
+def pull_audio_input_stream_compressed_opus(opus_file_path, default_speech_auth):
+    compressed_format = speechsdk.audio.AudioStreamFormat(
+        compressed_stream_format=speechsdk.AudioStreamContainerFormat.OGG_OPUS)
+    compressed_stream_helper(compressed_format, opus_file_path, default_speech_auth)
